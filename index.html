@@ -1,1 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAIHAN GAMING - Play Online</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #0b1120; color: white; text-align: center; }
+        header { background-color: #111827; padding: 25px 15px; border-bottom: 2px solid #1e293b; }
+        header h1 { color: #38bdf8; font-size: 28px; letter-spacing: 1px; }
+        header p { color: #94a3b8; font-size: 15px; margin-top: 8px; }
+        .search-container { margin: 20px auto; max-width: 500px; padding: 0 15px; }
+        .search-container input { width: 100%; padding: 14px 20px; border-radius: 12px; border: 2px solid #38bdf8; background-color: #1e293b; color: white; font-size: 16px; outline: none; }
+        .section-title { text-align: left; max-width: 900px; margin: 25px auto 15px; padding: 0 20px; font-size: 22px; color: #38bdf8; }
+        .games-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 18px; max-width: 900px; margin: 0 auto 30px; padding: 0 15px; }
+        .game-card { background-color: #1e293b; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 16px rgba(0,0,0,0.4); display: flex; flex-direction: column; justify-content: space-between; padding-bottom: 15px; }
+        .game-banner { width: 100%; height: 110px; display: flex; align-items: center; justify-content: center; font-size: 42px; font-weight: bold; }
+        .game-card h3 { font-size: 16px; margin: 12px 10px; color: #f8fafc; }
+        .play-btn { display: inline-block; background-color: #22c55e; color: white; font-weight: bold; text-decoration: none; padding: 10px 22px; border-radius: 25px; margin: 0 auto; font-size: 13px; border: none; cursor: pointer; }
+        
+        /* د انلاین لوبې کړکۍ */
+        #gameModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 1000; flex-direction: column; align-items: center; justify-content: center; }
+        #gameCanvas { background: #1e293b; border: 3px solid #38bdf8; border-radius: 10px; max-width: 95%; }
+        .close-btn { background: #ef4444; color: white; border: none; padding: 10px 25px; border-radius: 8px; font-size: 16px; font-weight: bold; margin-bottom: 15px; cursor: pointer; }
+        .controls { margin-top: 15px; display: flex; gap: 15px; }
+        .ctrl-btn { background: #38bdf8; color: #0f172a; border: none; padding: 15px 25px; border-radius: 12px; font-size: 20px; font-weight: bold; }
+        footer { padding: 20px; color: #64748b; font-size: 14px; border-top: 1px solid #1e293b; margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>🎮 RAIHAN GAMING</h1>
+    <p>Play All Mobile Games Online Without Download</p>
+</header>
+
+<div class="search-container">
+    <input type="text" id="searchInput" onkeyup="searchGames()" placeholder="🔍 Search Online Games...">
+</div>
+
+<h2 class="section-title">🕹️ Instant Online Games</h2>
+<div class="games-grid">
+    <!-- ۱. د مار انلاین لوبه -->
+    <div class="game-card">
+        <div class="game-banner" style="background: linear-gradient(135deg, #22c55e, #15803d);">🐍</div>
+        <h3>Classic Snake</h3>
+        <button onclick="openSnakeGame()" class="play-btn">PLAY ONLINE</button>
+    </div>
+
+    <!-- ۲. د موټر انلاین لوبه -->
+    <div class="game-card">
+        <div class="game-banner" style="background: linear-gradient(135deg, #ec4899, #be185d);">🚗</div>
+        <h3>Speed Car Dodge</h3>
+        <button onclick="openCarGame()" class="play-btn">PLAY ONLINE</button>
+    </div>
+
+    <!-- ۳. Subway Surfers انلاین -->
+    <div class="game-card">
+        <div class="game-banner" style="background: linear-gradient(135deg, #f59e0b, #ef4444);">🏃‍♂️</div>
+        <h3>Subway Surfers</h3>
+        <a href="https://poki.com" target="_blank" class="play-btn">PLAY ONLINE</a>
+    </div>
+
+    <!-- ۴. Car Racing انلاین -->
+    <div class="game-card">
+        <div class="game-banner" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8);">🏎️</div>
+        <h3>Car Racing</h3>
+        <a href="https://poki.com" target="_blank" class="play-btn">PLAY ONLINE</a>
+    </div>
+
+    <!-- ۵. Football انلاین -->
+    <div class="game-card">
+        <div class="game-banner" style="background: linear-gradient(135deg, #10b981, #047857);">⚽</div>
+        <h3>Football Games</h3>
+        <a href="https://poki.com" target="_blank" class="play-btn">PLAY ONLINE</a>
+    </div>
+
+    <!-- ۶. Shooting & Action انلاین -->
+    <div class="game-card">
+        <div class="game-banner" style="background: linear-gradient(135deg, #eab308, #854d0e);">🔫</div>
+        <h3>Action Shooting</h3>
+        <a href="https://poki.com" target="_blank" class="play-btn">PLAY ONLINE</a>
+    </div>
+</div>
+
+<!-- د لوبې کولو کړکۍ -->
+<div id="gameModal">
+    <button class="close-btn" onclick="closeGame()">✖ بندول (Close)</button>
+    <h3 id="scoreDisplay" style="margin-bottom: 10px; color: #38bdf8;">Score: 0</h3>
+    <canvas id="gameCanvas" width="300" height="300"></canvas>
+    <div class="controls" id="mobileControls"></div>
+</div>
+
+<footer>
+    © 2026 RAIHAN GAMING - Play Free Online Games
+</footer>
+
+<script>
+let gameInterval;
+const modal = document.getElementById("gameModal");
+const canvas = document.getElementById("gameCanvas");
+const ctx = canvas.getContext("2d");
+const scoreText = document.getElementById("scoreDisplay");
+const controlsDiv = document.getElementById("mobileControls");
+
+function closeGame() {
+    clearInterval(gameInterval);
+    modal.style.display = "none";
+}
+
+function openSnakeGame() {
+    modal.style.display = "flex";
+    clearInterval(gameInterval);
+    let box = 15, snake = [{x: 9 * box, y: 10 * box}], d = "RIGHT", score = 0;
+    let food = { x: Math.floor(Math.random() * 19 + 1) * box, y: Math.floor(Math.random() * 19 + 1) * box };
+    scoreText.innerText = "Score: 0";
+    controlsDiv.innerHTML = `
+        <button class="ctrl-btn" onclick="setDir('LEFT')">⬅️</button>
+        <button class="ctrl-btn" onclick="setDir('UP')">⬆️</button>
+        <button class="ctrl-btn" onclick="setDir('DOWN')">⬇️</button>
+        <button class="ctrl-btn" onclick="setDir('RIGHT')">➡️</button>
+    `;
+    window.setDir = (dir) => {
+        if(dir=="LEFT" && d!="RIGHT") d="LEFT";
+        if(dir=="UP" && d!="DOWN") d="UP";
+        if(dir=="RIGHT" && d!="LEFT") d="RIGHT";
+        if(dir=="DOWN" && d!="UP") d="DOWN";
+    };
+    gameInterval = setInterval(() => {
+        ctx.fillStyle = "#1e293b"; ctx.fillRect(0, 0, 300, 300);
+        for(let i=0; i<snake.length; i++){
+            ctx.fillStyle = (i==0) ? "#22c55e" : "#86efac";
+            ctx.fillRect(snake[i].x, snake[i].y, box, box);
+        }
+        ctx.fillStyle = "#ef4444"; ctx.fillRect(food.x, food.y, box, box);
+        let snakeX = snake.x, snakeY = snake.y;
+        if(d=="LEFT") snakeX -= box; if(d=="UP") snakeY -= box;
+        if(d=="RIGHT") snakeX += box; if(d=="DOWN") snakeY += box;
+        if(snakeX == food.x && snakeY == food.y) {
+            score++; scoreText.innerText = "Score: " + score;
+            food = { x: Math.floor(Math.random() * 19) * box, y: Math.floor(Math.random() * 19) * box };
+        } else { snake.pop(); }
+        let newHead = {x: snakeX, y: snakeY};
+        if(snakeX < 0 || snakeY < 0 || snakeX >= 300 || snakeY >= 300 || snake.some(s => s.x==newHead.x && s.y==newHead.y)) {
+            clearInterval(gameInterval); alert("لوبه پای ته ورسېده! ستاسو نمرې: " + score);
+        }
+        snake.unshift(newHead);
+    }, 150);
+}
+
+function openCarGame() {
+    modal.style.display = "flex";
+    clearInterval(gameInterval);
+    let carX = 130, obsX = Math.floor(Math.random() * 250), obsY = 0, score = 0;
+    scoreText.innerText = "Score: 0";
+    controlsDiv.innerHTML = `
+        <button class="ctrl-btn" onclick="moveCar(-30)">⬅️ چپ</button>
+        <button class="ctrl-btn" onclick="moveCar(30)">ښي ➡️</button>
+    `;
+    window.moveCar = (step) => {
+        if(carX + step >= 0 && carX + step <= 260) carX += step;
+    };
+    gameInterval = setInterval(() => {
+        ctx.fillStyle = "#1e293b"; ctx.fillRect(0, 0, 300, 300);
+        ctx.fillStyle = "#38bdf8"; ctx.fillRect(carX, 240, 40, 50);
+        ctx.fillStyle = "#ef4444"; ctx.fillRect(obsX, obsY, 40, 40);
+        obsY += 8;
+        if(obsY > 300) {
+            obsY = 0; obsX = Math.floor(Math.random() * 260);
+            score++; scoreText.innerText = "Score: " + score;
+        }
+        if(obsY + 40 > 240 && obsY < 290 && obsX + 40 > carX && obsX < carX + 40) {
+            clearInterval(gameInterval); alert("ټکر وشو! ستاسو نمرې: " + score);
+        }
+    }, 40);
+}
+
+function searchGames() {
+    let input = document.getElementById("searchInput").value.toLowerCase();
+    document.querySelectorAll(".game-card").forEach(card => {
+        let title = card.querySelector("h3").innerText.toLowerCase();
+        card.style.display = title.includes(input) ? "flex" : "none";
+    });
+}
+</script>
+
+</body>
+</html>
 
